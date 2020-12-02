@@ -3,10 +3,15 @@ const { parse } = require('path');
 const app = express();
 const port = 3000;
 const router = express.Router();
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const authRoute = require('./routes/auth');
 
 //Courses
 const courses = require('./Lab3-timetable-data.json');
 const scheduleArray = [];
+
+dotenv.config();
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -16,6 +21,14 @@ app.use((req, res, next) => {
 //Setup serving front-end code
 
 app.use('/', express.static('static'));
+
+app.use('/api/user', authRoute);
+
+//Connect to DB
+mongoose.connect(process.env.DB_CONNECT, 
+    { useNewUrlParser: true, useUnifiedTopology: true }, 
+    ()=> console.log('Connected to db!')
+);
 
 router.get('/', (req, res) => {
     console.log(`GET request for ${req.url}`);
@@ -93,3 +106,4 @@ app.use('/api/courses', router);
 app.listen(port, () => {
     console.log('Listening on port ' + port);
 });
+
