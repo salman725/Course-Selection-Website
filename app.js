@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoute = require('./routes/auth');
 
+app.use(express.json());
+
 //Courses
 const courses = require('./Lab3-timetable-data.json');
 const scheduleArray = [];
@@ -22,6 +24,7 @@ app.use((req, res, next) => {
 
 app.use('/', express.static('static'));
 
+// Route Middlewares
 app.use('/api/user', authRoute);
 
 //Connect to DB
@@ -41,7 +44,7 @@ app.get('/api/schedule', (req, res) => {
 });
 
 // Parse data in body as JSON
-router.use(express.json());
+//router.use(express.json());
 
 // Subject name (ex: STATS)
 router.get('/:subject', (req, res) => {
