@@ -8,6 +8,11 @@ const router = express.Router();
 const courses = require('./Lab3-timetable-data.json');
 const scheduleArray = [];
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+  });
+
 //Setup serving front-end code
 
 app.use('/', express.static('static'));
