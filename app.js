@@ -6,6 +6,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoute = require('./routes/auth');
+const reviewRoute = require('./routes/review');
 
 app.use(express.json());
 
@@ -26,6 +27,7 @@ app.use('/', express.static('static'));
 
 // Route Middlewares
 app.use('/api/user', authRoute);
+app.use('/api/reviews', reviewRoute);
 
 //Connect to DB
 mongoose.connect(process.env.DB_CONNECT, 
