@@ -8,7 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoursesComponent } from './courses/courses.component';
 import { ScheduleComponent } from './schedule/schedule.component';
-import { UserComponent } from './user/user.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component'
 
 export class Course {
   constructor(
@@ -25,7 +26,8 @@ export class Course {
     AppComponent,
     CoursesComponent,
     ScheduleComponent,
-    UserComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
