@@ -36,8 +36,18 @@ newName: String;
 newDescription: String;
 newVisibility: String;
 
-result: String;
+schedule: 
+  {
+    visibility: String,
+    _id: String,
+    name: String,
+    username: String,
+    description: String,
+    courseList: [],
+    date: String,
+  };
 
+result: String;
 
 /*courses1: Courses[];
 
@@ -153,7 +163,6 @@ schedule: ScheduleComponent;
   }
 
   deleteSchedule(){
-
     let url = "http://localhost:3000/api/schedule/";
     this.http.delete(url + this.sName)
     .toPromise().then((data: any) => {
@@ -172,4 +181,59 @@ schedule: ScheduleComponent;
       this.courses1 = response;
     });
   }*/
+
+  getSchedule(){
+
+    let url = "http://localhost:3000/api/schedule/";
+
+    this.http.get(url + this.sName)
+    .toPromise().then((data: any) => {
+      this.schedule = data;
+      console.log(this.schedule);
+      const a = document.getElementById('scheduleName');
+      a.innerHTML = "";
+      let h3N = document.createElement('h3');
+      let pUN = document.createElement('p');
+      let description = document.createElement('p');
+      h3N.appendChild(document.createTextNode(`Schedule Name: ${this.schedule[0].name}`));
+      pUN.appendChild(document.createTextNode(`Created by: ${this.schedule[0].username}`));
+      description.appendChild(document.createTextNode(`Description: ${this.schedule[0].description}`));
+      a.appendChild(h3N);
+      a.appendChild(pUN);
+      a.appendChild(description);
+      console.log(this.schedule);
+      const b = document.getElementById('schedule');
+      b.innerHTML = "";
+      let i = 1;
+      this.schedule[0].courseList.forEach(e => {
+          let h3s = document.createElement('h3');
+          h3s.appendChild(document.createTextNode(`${i}. ${e.subject} ${e.catalog_nbr}`));
+          b.appendChild(h3s);
+          i++;
+      });
+
+
+
+        /*this.schedule.forEach(e => {
+            const subjects1 = e["subject"];
+            const cN1 = e["catalog_nbr"];
+            const components1 = e["course_info"][0]["ssr_component"];
+            let h3s = document.createElement('h3');
+            let ps = document.createElement('p');
+            let p2s = document.createElement('p');
+            var br = document.createElement('br');
+        
+            if (subjectSearch == subjects1 && cnSearch == cN1 && componentSearch == components1){
+                // Input sanitization checks for valid characters
+                h3s.appendChild(document.createTextNode(`${e["subject"]} ${e["catalog_nbr"]} - ${e["className"]} `));
+                ps.appendChild(document.createTextNode(`${e["catalog_description"]}`));
+                p2s.appendChild(document.createTextNode(`${e["course_info"][0]["ssr_component"]} Section: ${e["course_info"][0]["class_section"]}`));
+                a.appendChild(h3s);
+                a.appendChild(ps);
+                a.appendChild(p2s);
+        }
+       });
+       */
+    })
+}
 }

@@ -14,8 +14,8 @@
   <p></p>
 </div>
 
-<input type="search" name = "scheduleN" id= "scheduleN" placeholder="Enter schedule name ...">
-<button (click)="addToSchedule()">View Schedule</button>
+<input [(ngModel)]= "sName" type="search" id= "scheduleN" placeholder="Enter schedule name ...">
+<button (click)="getSchedule()">View Schedule</button>
 <p></p>
 
 <input [(ngModel)]= "oldName" type="search" id= "scheduleN" placeholder="Old schedule name ...">
@@ -28,7 +28,11 @@
 <input [(ngModel)]= "sName" type="search" id= "scheduleN" placeholder="Enter schedule name ...">
 <button (click)="deleteSchedule()">Delete Schedule</button>
 
+<div class = "schdFormat" id = "schdFormat" name = "schdFormat">
+<div id = "scheduleName" name = "scheduleName">
 
+</div>
   <p id = "sName"></p>
 
   <ol id="schedule"></ol>
+</div>

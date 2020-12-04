@@ -59,13 +59,13 @@ schd.post('/name', async (req,res) =>{
 });
 
 //Specific Schedule
-schd.get('/name', async (req,res)=>{
-    const scheduleName = req.body.name;
+schd.get('/:name', async (req,res)=>{
+    const scheduleName = req.params.name;
     await Schedule.find({name: scheduleName}, (error, data) =>{
         if(error){
             console.log(error)
         }else{
-            res.json(data);
+            res.send(data);
         }
     })
 });
