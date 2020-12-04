@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoute = require('./routes/auth');
 const reviewRoute = require('./routes/review');
+const scheduleRoute = require('./routes/schedule');
 
 app.use(express.json());
 
@@ -30,6 +31,7 @@ app.use('/', express.static('static'));
 // Route Middlewares
 app.use('/api/user', authRoute);
 app.use('/api/reviews', reviewRoute);
+app.use('/api/schedule', scheduleRoute)
 
 //Connect to DB
 mongoose.connect(process.env.DB_CONNECT, 
@@ -46,9 +48,6 @@ app.get('/api/schedule', (req, res) => {
     console.log(`GET request for ${req.url}`);
     res.send(scheduleArray);
 });
-
-// Parse data in body as JSON
-//router.use(express.json());
 
 // Subject name (ex: STATS)
 router.get('/:subject', (req, res) => {

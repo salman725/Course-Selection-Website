@@ -81,21 +81,4 @@ auth.patch('/login', async(req,res) =>{
 
 })
 
-/*app.patch('/posts/:postId', async (req,res) => {
-    try{
-    const updatedPost = await Post.updateOne({_id: req.params.postId}, { $set: {title: req.body.title}});
-    res.json(updatedPost);
-    }catch(err){
-        res.json({message: err});
-}
-});
-
-const user = new User({
-        name: req.body.name,
-        email: req.body.email,
-        password: hashedPassword
-    });
-
-*/
-
 module.exports = auth;
