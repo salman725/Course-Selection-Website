@@ -18,15 +18,15 @@
 <button (click)="addToSchedule()">View Schedule</button>
 <p></p>
 
-<input type="search" name = "oldscheduleN" id= "oldscheduleN" placeholder="Old schedule name ...">
-<input type="search" name = "newscheduleN" id= "newscheduleN" placeholder="New schedule name ...">
-<input type="search" name = "description" id= "description" placeholder="Description ...">
-<input type="search" name = "visibility" id= "visibility" placeholder="Visibility ...">
-<button (click)="addToSchedule()">Edit Schedule</button>
+<input [(ngModel)]= "oldName" type="search" id= "scheduleN" placeholder="Old schedule name ...">
+<input [(ngModel)]= "newName" type="search" id= "scheduleN" placeholder="New schedule name ...">
+<input [(ngModel)]= "newDescription" type="search" id= "scheduleN" placeholder="New description ...">
+<input [(ngModel)]= "newVisibility" type="search" id= "scheduleN" placeholder="New Visibility ...">
+<button (click)="editSchedule()">Edit Schedule</button>
 <p></p>
 
-<input type="search" name = "scheduleN" id= "scheduleN" placeholder="Enter schedule name ...">
-<button (click)="addToSchedule()">Delete Schedule</button>
+<input [(ngModel)]= "sName" type="search" id= "scheduleN" placeholder="Enter schedule name ...">
+<button (click)="deleteSchedule()">Delete Schedule</button>
 
 
   <p id = "sName"></p>

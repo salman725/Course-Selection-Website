@@ -18,6 +18,14 @@ schd.post('/', async (req,res) => {
     const scheduleExist = await Schedule.findOne({name: req.body.name});
     if (scheduleExist) return res.send({any: 'Schedule already exists'});
 
+    //Checking if display name is empty
+    const displayName = req.body.username;
+    if (!displayName) return res.send({any: 'Please enter in a display name'});
+
+    //Checking if schedule name is empty
+    const sName = req.body.name;
+    if (!sName) return res.send({any: 'Please enter in a schedule name'});
+
     // If not then create a new schedule
     const schedule = new Schedule({
         name: req.body.name,
@@ -38,7 +46,7 @@ schd.post('/', async (req,res) => {
 schd.post('/name', async (req,res) =>{
     Schedule.findOneAndUpdate({name: req.body.name},
         { $set: {date: Date.now()}, $push: {courseList: {subject: req.body.subject, catalog_nbr: req.body.catalog_nbr}}},
-        res.send({any: 'Course added successfull!'}),
+        res.send({any: 'Course added successfully!'}),
             function(error, success) {
                 if(error){
                     console.log(error)
@@ -63,21 +71,28 @@ schd.get('/name', async (req,res)=>{
 });
 
 //Delete a schedule
-schd.delete('/name', async (req,res)=>{
-    try{
-    const removedSchedule = await Schedule.deleteOne({name: req.body.name});
+schd.delete('/:name', async (req,res)=>{
+
+    //Checking if schedule exists
+    const scheduleExist = await Schedule.findOne({name: req.params.name});
+    if (!scheduleExist) return res.send({any: 'No such schedule exists'});
+
+    const removedSchedule = await Schedule.deleteOne({name: req.params.name});
     res.json(removedSchedule);
-    }catch(err){
-        res.json({message: err});
-    }
+    res.send({any: 'Schedule successfully deleted!'});
 });
 
 //Update Schdule
 schd.patch('/name', async (req,res) => {
+    
+    //Checking if schedule exists
+    const scheduleExist = await Schedule.findOne({name: req.body.name});
+    if (!scheduleExist) return res.send({any: 'No such schedule exists'});
+
     const updatedSchedule = await Schedule.updateOne({name: req.body.oldname}, {$set: {name: req.body.newname, description: req.body.description, visibility: req.body.visibility, date: Date.now()}})
-    res.send({any: 'Schedule successfully changed!'});
     try {
         const updatedSchedule = await schedule.save();
+        res.send({any: 'Schedule successfully changed!'});
         //res.json({user: user._id});
     }catch(err){
         res.status(400).json(err);

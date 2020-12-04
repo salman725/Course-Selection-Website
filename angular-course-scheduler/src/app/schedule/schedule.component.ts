@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from '../course';
 //import { courseList } from '../mock-courses';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 //import 'rxjs/add/operator/toPromise';
 
@@ -29,6 +29,12 @@ visibility: String;
 
 subject: String;
 catalog_nbr: String;
+end: String;
+
+oldName: String;
+newName: String;
+newDescription: String;
+newVisibility: String;
 
 result: String;
 
@@ -131,6 +137,33 @@ schedule: ScheduleComponent;
        });
        */
   }
+
+  editSchedule(){
+    let url = "http://localhost:3000/api/schedule/name";
+    this.http.patch(url,{
+      oldname: this.oldName,
+      newname: this.newName,
+      description: this.newDescription,
+      visibility: this.newVisibility,
+    })
+    .toPromise().then((data: any) => {
+      this.result = JSON.stringify(data.any);
+      alert(this.result);
+    })
+  }
+
+  deleteSchedule(){
+
+    let url = "http://localhost:3000/api/schedule/";
+    this.http.delete(url + this.sName)
+    .toPromise().then((data: any) => {
+      //console.log(data.json);
+      this.result = JSON.stringify(data.any);
+      alert(this.result);
+    })
+
+  }
+
 
  /*getCourses(){
     this.httpClient.get<any>("http://localhost:3000/api/courses").subscribe(
