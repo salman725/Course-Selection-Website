@@ -3,15 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { User } from '../User';
 
-export class Users {
-  constructor(
-    public name: string,
-    public username: string,
-    public password: string
-  ) {
-  }
-}
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -44,14 +35,19 @@ export class RegisterComponent implements OnInit {
       alert('Please enter 6 or more characters for the password');
     }
 
+    if (!this.email.includes('@')){
+      alert('Please enter in a valid email');
+    }
+
     this.http.post(url,{
       name: this.name,
       email: this.email,
       password: this.password
     }).toPromise().then((data: any) => {
       console.log(data.json);
-      this.result = JSON.stringify(data);
+      this.result = JSON.stringify(data.any);
       alert(this.result);
     })
+
   }
 }
