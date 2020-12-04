@@ -1,10 +1,10 @@
 const schd = require('express').Router();
 const Schedule = require('../models/Schedule');
 
-// Gets back all the schedules
+// Gets back all the schedules that are public
 schd.get('/', async (req, res) => {
     try{
-        const schedule = await Schedule.find();
+        const schedule = await Schedule.find({visibility: "public"});
         res.json(schedule);
     }catch(err){
         res.json({message:err});

@@ -1,19 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from '../course';
-//import { courseList } from '../mock-courses';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-//import 'rxjs/add/operator/toPromise';
-
-/*export class Courses {
-  constructor(
-    public subject: string,
-    public catalog_nbr: string,
-    public className: string
-  ) {
-  }
-}
-*/
 
 @Component({
   selector: 'app-schedule',
@@ -49,32 +37,12 @@ schedule:
 
 result: String;
 
-/*courses1: Courses[];
-
-searchText;
-
-searchCN;
-
-searchComponent = '';
-
-scheduleN;
-
-selectedCourse: Course;
-
-schedule: ScheduleComponent;
-*/
-
   constructor(private http: HttpClient) { }
   
 
   ngOnInit(): void {
-    //this.getCourses();
   }
 
-  /*onSelect(course: Course): void {
-    this.selectedCourse = course;
-  }
-  */
 
   scheduleName(){
 
@@ -90,14 +58,6 @@ schedule: ScheduleComponent;
       this.result = JSON.stringify(data.any);
       alert(this.result);
     })
-
-    /*const s = (<HTMLInputElement>document.getElementById('scheduleN')).value;
-    const l = document.getElementById('sName');
-    const item = document.createElement('li');
-    let h3 = document.createElement('h3');
-    h3.appendChild(document.createTextNode('Schedule Name: ' + s));
-        l.appendChild(h3);
-        */
   }
 
   addToSchedule(){
@@ -154,7 +114,7 @@ schedule: ScheduleComponent;
       oldname: this.oldName,
       newname: this.newName,
       description: this.newDescription,
-      visibility: this.newVisibility,
+      visibility: this.newVisibility
     })
     .toPromise().then((data: any) => {
       this.result = JSON.stringify(data.any);
@@ -172,15 +132,6 @@ schedule: ScheduleComponent;
     })
 
   }
-
-
- /*getCourses(){
-    this.httpClient.get<any>("http://localhost:3000/api/courses").subscribe(
-      response => {
-      console.log(response);
-      this.courses1 = response;
-    });
-  }*/
 
   getSchedule(){
 
