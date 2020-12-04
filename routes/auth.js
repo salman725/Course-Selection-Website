@@ -55,6 +55,7 @@ auth.post('/login', async (req,res) => {
     //res.header('auth-token', token).send(token);
 });
 
+// Change password
 auth.patch('/login', async(req,res) =>{
 
     //Check if email matches

@@ -12,7 +12,11 @@ const ScheduleSchema = mongoose.Schema({
     description:{
         type: String
     },
-    courseList: [{subject: String, catalog_nbr: String}]
-})
+    courseList: [{subject: String, catalog_nbr: String}],
+    date: {
+        type: Date,
+        default: Date.now
+    },
+});
 
 module.exports = mongoose.model('Schedule', ScheduleSchema);
