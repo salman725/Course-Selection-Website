@@ -51,8 +51,51 @@ auth.post('/login', async (req,res) => {
 
     //If everything is good create and assign a token
     const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
-    res.send({any: 'Login successful!'})
-    res.header('auth-token', token).send(token);
+    res.send({any: 'Login successful!', token: token})
+    //res.header('auth-token', token).send(token);
 });
+
+auth.patch('/login', async(req,res) =>{
+
+    //Check if email matches
+    const user = await User.findOne({email: req.body.email});
+    if (!user) return res.send({any: 'Email is not found'});
+
+    //Check if password matches
+    const validPass = await bcrypt.compare(req.body.oldpassword, user.password);
+    if(!validPass) return res.send({any: 'Invalid password'});
+
+    //HASH passwords
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.newpassword, salt);
+
+    //If everything is good update password
+    const updatedUser = await User.updateOne({email: req.body.email}, {$set: {password: hashedPassword}})
+    res.send({any: 'Password successfully changed!'});
+    try {
+        const updatedUser = await user.save();
+        //res.json({user: user._id});
+    }catch(err){
+        res.status(400).json(err);
+    }
+
+})
+
+/*app.patch('/posts/:postId', async (req,res) => {
+    try{
+    const updatedPost = await Post.updateOne({_id: req.params.postId}, { $set: {title: req.body.title}});
+    res.json(updatedPost);
+    }catch(err){
+        res.json({message: err});
+}
+});
+
+const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: hashedPassword
+    });
+
+*/
 
 module.exports = auth;

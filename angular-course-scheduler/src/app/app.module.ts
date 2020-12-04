@@ -9,7 +9,8 @@ import { AppComponent } from './app.component';
 import { CoursesComponent } from './courses/courses.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component'
+import { RegisterComponent } from './register/register.component';
+import { PasswordChangeComponent } from './password-change/password-change.component'
 
 export class Course {
   constructor(
@@ -28,6 +29,7 @@ export class Course {
     ScheduleComponent,
     LoginComponent,
     RegisterComponent,
+    PasswordChangeComponent,
   ],
   imports: [
     BrowserModule,

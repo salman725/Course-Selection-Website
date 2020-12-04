@@ -13,7 +13,6 @@ export class LoginComponent implements OnInit {
   password: String;
 
   result: String;
-  permResult: String;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -43,10 +42,14 @@ export class LoginComponent implements OnInit {
       //console.log(data.json);
       this.result = JSON.stringify(data.any);
       if(data.any == "Login successful!"){
-        this.router.navigate(['user']);
+        this.router.navigate(['user', data.token]);
       }
       alert(this.result);
     })
+  }
+
+  changePassword (){
+    this.router.navigate(['password-change'])
   }
 
 }
