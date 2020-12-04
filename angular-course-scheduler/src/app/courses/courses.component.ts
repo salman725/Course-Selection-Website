@@ -55,9 +55,11 @@ selectedCourse: Course;
         const subjectSearch = (<HTMLInputElement>document.getElementById('subjectSearch1')).value.toUpperCase();
         const cnSearch = (<HTMLInputElement>document.getElementById('cnSearch1')).value.toUpperCase();
         const componentSearch = (<HTMLInputElement>document.getElementById('componentSearch1')).value.toUpperCase();
+        const generalSearch = (<HTMLInputElement>document.getElementById('generalSearch')).value.toUpperCase();
         this.courses.forEach(e => {
             const subjects1 = e["subject"];
-            const cN1 = e["catalog_nbr"];
+            const cN1 = e["catalog_nbr"].toString();
+            const classN = e["className"];
             const components1 = e["course_info"][0]["ssr_component"];
             let h3s = document.createElement('h3');
             let ps = document.createElement('p');
@@ -66,6 +68,18 @@ selectedCourse: Course;
             var br = document.createElement('br');
 
             if (subjectSearch == subjects1 && cnSearch == cN1 && componentSearch == ""){
+              // Input sanitization checks for valid characters\
+              h3s.appendChild(document.createTextNode(`${e["subject"]} ${e["catalog_nbr"]} - ${e["className"]} `));
+              ps.appendChild(document.createTextNode(`${e["catalog_description"]}`));
+              p2s.appendChild(document.createTextNode(`LEC ${e["course_info"][0]["start_time"]} to ${e["course_info"][0]["end_time"]}`));
+              p3s.appendChild(document.createTextNode(`${e["course_info"][0]["ssr_component"]} Section: ${e["course_info"][0]["class_section"]}`));
+              a.appendChild(h3s);
+              a.appendChild(ps);
+              a.appendChild(p2s);
+              a.appendChild(p3s);
+            }
+
+            if (cnSearch == cN1 && componentSearch == "" && subjectSearch == ""){
               // Input sanitization checks for valid characters\
               h3s.appendChild(document.createTextNode(`${e["subject"]} ${e["catalog_nbr"]} - ${e["className"]} `));
               ps.appendChild(document.createTextNode(`${e["catalog_description"]}`));
@@ -86,6 +100,17 @@ selectedCourse: Course;
                 a.appendChild(ps);
                 a.appendChild(p2s);
               }
+
+              if (generalSearch.length > 3 && (classN.includes(generalSearch) || cN1.includes(generalSearch))){
+                // Input sanitization checks for valid characters
+                h3s.appendChild(document.createTextNode(`${e["subject"]} ${e["catalog_nbr"]} - ${e["className"]} `));
+                ps.appendChild(document.createTextNode(`${e["catalog_description"]}`));
+                p2s.appendChild(document.createTextNode(`${e["course_info"][0]["ssr_component"]} Section: ${e["course_info"][0]["class_section"]}`));
+                a.appendChild(h3s);
+                a.appendChild(ps);
+                a.appendChild(p2s);
+              }
+
             });
   }
 
