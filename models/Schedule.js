@@ -13,6 +13,10 @@ const ScheduleSchema = mongoose.Schema({
         type: String
     },
     courseList: [{subject: String, catalog_nbr: String}],
+    visibility: {
+        type: String,
+        default: "private"
+    },
     date: {
         type: Date,
         default: Date.now

@@ -22,9 +22,10 @@ schd.post('/', async (req,res) => {
     const schedule = new Schedule({
         name: req.body.name,
         username: req.body.username,
-        description: req.body.description
+        description: req.body.description,
+        visibility: req.body.visibility
     });
-    //res.send({any: 'Schedule creation successfull!'});
+    res.send({any: 'Schedule creation successfull!'});
     try {
         const savedSchedule = await schedule.save();
         res.json(savedSchedule);
@@ -73,7 +74,7 @@ schd.delete('/name', async (req,res)=>{
 
 //Update Schdule
 schd.patch('/name', async (req,res) => {
-    const updatedSchedule = await Schedule.updateOne({name: req.body.oldname}, {$set: {name: req.body.newname, description: req.body.description, date: Date.now()}})
+    const updatedSchedule = await Schedule.updateOne({name: req.body.oldname}, {$set: {name: req.body.newname, description: req.body.description, visibility: req.body.visibility, date: Date.now()}})
     res.send({any: 'Schedule successfully changed!'});
     try {
         const updatedSchedule = await schedule.save();

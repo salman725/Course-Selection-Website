@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 //import 'rxjs/add/operator/toPromise';
 
-export class Courses {
+/*export class Courses {
   constructor(
     public subject: string,
     public catalog_nbr: string,
@@ -13,6 +13,7 @@ export class Courses {
   ) {
   }
 }
+*/
 
 @Component({
   selector: 'app-schedule',
@@ -21,7 +22,18 @@ export class Courses {
 })
 export class ScheduleComponent implements OnInit {
 
-courses1: Courses[];
+dName: String;
+sName: String;
+description: String;
+visibility: String;
+
+subject: String;
+catalog_nbr: String;
+
+result: String;
+
+
+/*courses1: Courses[];
 
 searchText;
 
@@ -34,29 +46,67 @@ scheduleN;
 selectedCourse: Course;
 
 schedule: ScheduleComponent;
+*/
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private http: HttpClient) { }
   
 
   ngOnInit(): void {
-    this.getCourses();
+    //this.getCourses();
   }
 
-  onSelect(course: Course): void {
+  /*onSelect(course: Course): void {
     this.selectedCourse = course;
   }
+  */
 
   scheduleName(){
-    const s = (<HTMLInputElement>document.getElementById('scheduleN')).value;
+
+    let url = "http://localhost:3000/api/schedule";
+
+    this.http.post(url,{
+      name: this.sName,
+      username: this.dName,
+      description: this.description,
+      visibility: this.visibility
+    }).toPromise().then((data: any) => {
+      //console.log(data.json);
+      this.result = JSON.stringify(data.any);
+      alert(this.result);
+    })
+
+    /*const s = (<HTMLInputElement>document.getElementById('scheduleN')).value;
     const l = document.getElementById('sName');
     const item = document.createElement('li');
     let h3 = document.createElement('h3');
     h3.appendChild(document.createTextNode('Schedule Name: ' + s));
         l.appendChild(h3);
+        */
   }
 
   addToSchedule(){
-        const a = document.getElementById('schedule');
+
+    let url = "http://localhost:3000/api/schedule/name";
+
+    if (!this.subject){
+      alert('Please enter in a subject');
+    }
+
+    if (!this.catalog_nbr){
+      alert('Please enter in a catalog_nbr');
+    }
+
+    this.http.post(url,{
+      name: this.sName,
+      subject: this.subject,
+      catalog_nbr: this.catalog_nbr,
+    }).toPromise().then((data: any) => {
+      //console.log(data.json);
+      this.result = JSON.stringify(data.any);
+      alert(this.result);
+    })
+
+        /*const a = document.getElementById('schedule');
         const subjectSearch = (<HTMLInputElement>document.getElementById('subjectSearch')).value.toUpperCase();
         const cnSearch = (<HTMLInputElement>document.getElementById('cnSearch')).value.toUpperCase();
         const componentSearch = (<HTMLInputElement>document.getElementById('componentSearch')).value.toUpperCase();
@@ -79,13 +129,14 @@ schedule: ScheduleComponent;
                 a.appendChild(p2s);
         }
        });
+       */
   }
 
- getCourses(){
+ /*getCourses(){
     this.httpClient.get<any>("http://localhost:3000/api/courses").subscribe(
       response => {
       console.log(response);
       this.courses1 = response;
     });
-  }
+  }*/
 }
