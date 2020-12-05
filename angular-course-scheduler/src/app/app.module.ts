@@ -11,7 +11,8 @@ import { ScheduleComponent } from './schedule/schedule.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PasswordChangeComponent } from './password-change/password-change.component';
-import { PublicListsComponent } from './public-lists/public-lists.component'
+import { PublicListsComponent } from './public-lists/public-lists.component';
+import { AdminComponent } from './admin/admin.component'
 
 export class Course {
   constructor(
@@ -32,6 +33,7 @@ export class Course {
     RegisterComponent,
     PasswordChangeComponent,
     PublicListsComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,

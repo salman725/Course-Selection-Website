@@ -49,7 +49,18 @@ auth.post('/login', async (req,res) => {
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if(!validPass) return res.send({any: 'Invalid password'});
 
-    //If everything is good create and assign a token
+    //Check if status is inactive
+    const invalidUser = await User.findOne({email: req.body.email, status: "inactive"});
+    if (invalidUser) return res.send({any: 'Account is inactive, please contact the admin at root@site.com'});
+
+    //Check if admin priviliges
+    const admin = await User.findOne({email: req.body.email, priviliges: "admin"});
+    if(admin) {
+    const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
+    res.send({any: 'Welcome admin!', token: token})
+    }
+
+    //Regular user: login, create and assign a token
     const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
     res.send({any: 'Login successful!', token: token})
     //res.header('auth-token', token).send(token);
@@ -75,6 +86,25 @@ auth.patch('/login', async(req,res) =>{
     res.send({any: 'Password successfully changed!'});
     try {
         const updatedUser = await user.save();
+        //res.json({user: user._id});
+    }catch(err){
+        res.status(400).json(err);
+    }
+
+})
+
+//Admin change user status
+auth.patch('/admin', async(req,res) =>{
+
+    //Check if email matches
+    const user = await User.findOne({email: req.body.email});
+    if (!user) return res.send({any: 'Email is not found'});
+
+    //If everything is good update status
+    const updatedUser1 = await User.updateOne({email: req.body.email}, {$set: {status: req.body.status, priviliges: req.body.priviliges}})
+    res.send({any: 'User Status/priviliges successfully changed!'});
+    try {
+        const updatedUser1 = await user.save();
         //res.json({user: user._id});
     }catch(err){
         res.status(400).json(err);

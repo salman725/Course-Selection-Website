@@ -44,6 +44,9 @@ export class LoginComponent implements OnInit {
       if(data.any == "Login successful!"){
         this.router.navigate(['user', data.token]);
       }
+      if(data.any == "Welcome admin!"){
+        this.router.navigate(['admin', data.token]);
+      }
       alert(this.result);
     })
   }
