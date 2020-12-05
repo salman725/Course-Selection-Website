@@ -39,20 +39,25 @@ export class LoginComponent implements OnInit {
       email: this.email,
       password: this.password
     }).toPromise().then((data: any) => {
-      //console.log(data.json);
+      console.log(data);
       this.result = JSON.stringify(data.any);
       if(data.any == "Login successful!"){
-        this.router.navigate(['user', data.token]);
+        this.router.navigate(['user']);
       }
       if(data.any == "Welcome admin!"){
-        this.router.navigate(['admin', data.token]);
+        this.router.navigate(['admin']);
       }
+      localStorage.setItem('token', data.token)
       alert(this.result);
     })
   }
 
   changePassword (){
     this.router.navigate(['password-change'])
+  }
+
+  loggedIn(){
+    return !!localStorage.getItem('token');
   }
 
 }
