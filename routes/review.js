@@ -1,7 +1,7 @@
-const auth = require('express').Router();
+const rvw = require('express').Router();
 const verify = require('./verifyToken');
 
-auth.get('/', verify, (req,res) => {
+rvw.get('/', verify, (req,res) => {
     res.json({
         review: {
             title: 'great course',
@@ -10,4 +10,14 @@ auth.get('/', verify, (req,res) => {
     });
 });
 
-module.exports = auth;
+rvw.post('/', verify, (req,res) => {
+    res.json({
+        review: {
+            title: 'great course',
+            description: 'only logged in users can view this review'
+        }
+    });
+});
+
+
+module.exports = rvw;
